@@ -5,7 +5,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production
+    environment: prod
     name: Build Image
     steps:
       - uses: actions/checkout@v2
