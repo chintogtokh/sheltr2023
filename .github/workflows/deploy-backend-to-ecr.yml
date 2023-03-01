@@ -1,4 +1,4 @@
-name: Build backend and move to ECR
+name: 2. Build backend and move to ECR
 on:
   workflow_dispatch:
 

@@ -1,4 +1,4 @@
-name: Deploy frontend to s3
+name: 1. Deploy frontend to s3
 on:
   workflow_dispatch:
 
