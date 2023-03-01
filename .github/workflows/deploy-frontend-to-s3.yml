@@ -1,6 +1,8 @@
 name: Deploy frontend to s3
-on: workflow_dispatch
-
+on:
+  push:
+    branches:
+      - "nonexistentbranch"
 jobs:
   build:
     runs-on: ubuntu-latest
