@@ -23,7 +23,8 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "sheltr_bucket" {
-  bucket = "${var.frontend_domain}.${var.root_domain}"
+  bucket        = "${var.frontend_domain}.${var.root_domain}"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_website_configuration" "sheltr_bucket_website" {
