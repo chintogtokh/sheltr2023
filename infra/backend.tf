@@ -6,6 +6,30 @@ resource "aws_ecs_cluster" "sheltr_cluster" {
   name = "sheltr_cluster"
 }
 
+resource "aws_ecs_task_definition" "mongodb_task" {
+  family                   = "mongodb-task"
+  container_definitions    = <<DEFINITION
+  [
+    {
+      "name": "mongodb-task",
+      "image": "mongo:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 27017,
+          "hostPort": 27017
+        }
+      ]
+    }
+  ]
+  DEFINITION
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  memory                   = 512
+  cpu                      = 256
+  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
+}
+
 resource "aws_ecs_task_definition" "sheltr_backend_task" {
   family                   = "sheltr-backend-task"
   container_definitions    = <<DEFINITION
@@ -25,10 +49,10 @@ resource "aws_ecs_task_definition" "sheltr_backend_task" {
     }
   ]
   DEFINITION
-  requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
-  network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
-  memory                   = 512         # Specifying the memory our container requires
-  cpu                      = 256         # Specifying the CPU our container requires
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  memory                   = 512
+  cpu                      = 256
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 }
 
@@ -53,6 +77,21 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_ecs_service" "mongodb_service" {
+  name            = "mongodb-service"
+  cluster         = aws_ecs_cluster.sheltr_cluster.id
+  task_definition = aws_ecs_task_definition.mongodb_task.arn
+  launch_type     = "FARGATE"
+  desired_count   = 1
+
+  network_configuration {
+    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
+    assign_public_ip = true
+    security_groups  = ["${aws_security_group.mongo_security_group.id}"]
+  }
+
+}
+
 resource "aws_ecs_service" "sheltr_backend_service" {
   name            = "sheltr-backend-service"
   cluster         = aws_ecs_cluster.sheltr_cluster.id
@@ -61,20 +100,20 @@ resource "aws_ecs_service" "sheltr_backend_service" {
   desired_count   = 1
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.target_group.arn # Referencing our target group
+    target_group_arn = aws_lb_target_group.target_group.arn
     container_name   = aws_ecs_task_definition.sheltr_backend_task.family
     container_port   = 4000
   }
 
   network_configuration {
     subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
-    assign_public_ip = true                                                # Providing our containers with public IPs
-    security_groups  = ["${aws_security_group.service_security_group.id}"] # Setting the security group
+    assign_public_ip = true
+    security_groups  = ["${aws_security_group.service_security_group.id}"]
   }
 
 }
 
-# Providing a reference to our default VPC
+# References to default VPCs, Subnets
 resource "aws_default_vpc" "default_vpc" {
 }
 
@@ -91,11 +130,8 @@ resource "aws_default_subnet" "default_subnet_c" {
   availability_zone = "ap-southeast-2c"
 }
 
-
-# /////
-
 resource "aws_alb" "sheltr_backend_alb" {
-  name               = "sheltr-backend-alb" # Naming our load balancer
+  name               = "sheltr-backend-alb"
   load_balancer_type = "application"
   subnets = [
     "${aws_default_subnet.default_subnet_a.id}",
@@ -105,7 +141,6 @@ resource "aws_alb" "sheltr_backend_alb" {
   security_groups = ["${aws_security_group.sheltr_backend_alb_security_group.id}"]
 }
 
-# Creating a security group for the load balancer:
 resource "aws_security_group" "sheltr_backend_alb_security_group" {
   ingress {
     from_port   = 80
@@ -115,14 +150,12 @@ resource "aws_security_group" "sheltr_backend_alb_security_group" {
   }
 
   egress {
-    from_port   = 0             # Allowing any incoming port
-    to_port     = 0             # Allowing any outgoing port
-    protocol    = "-1"          # Allowing any outgoing protocol 
-    cidr_blocks = ["0.0.0.0/0"] # Allowing traffic out to all IP addresses
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-# // Target grtoups
 
 resource "aws_lb_target_group" "target_group" {
   name        = "target-group"
@@ -137,31 +170,46 @@ resource "aws_lb_target_group" "target_group" {
 }
 
 resource "aws_lb_listener" "listener" {
-  load_balancer_arn = aws_alb.sheltr_backend_alb.arn # Referencing our load balancer
+  load_balancer_arn = aws_alb.sheltr_backend_alb.arn
   port              = "80"
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.target_group.arn # Referencing our tagrte group
+    target_group_arn = aws_lb_target_group.target_group.arn
   }
 }
-
-
-
 
 resource "aws_security_group" "service_security_group" {
   ingress {
     from_port = 0
     to_port   = 0
     protocol  = "-1"
-    # Only allowing traffic in from the load balancer security group
+    # Only from sheltr_backend_alb_security_group
     security_groups = ["${aws_security_group.sheltr_backend_alb_security_group.id}"]
   }
 
+  # Harden
   egress {
-    from_port   = 0             # Allowing any incoming port
-    to_port     = 0             # Allowing any outgoing port
-    protocol    = "-1"          # Allowing any outgoing protocol 
-    cidr_blocks = ["0.0.0.0/0"] # Allowing traffic out to all IP addresses
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+resource "aws_security_group" "mongo_security_group" {
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"] # Can be changed to only include ALB + Home Address, etc
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }

@@ -8,3 +8,5 @@ backend/dist/*
 temp/*
 Chinto/*
 *.css
+
+suburbs.json

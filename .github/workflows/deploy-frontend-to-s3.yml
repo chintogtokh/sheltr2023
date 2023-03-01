@@ -24,6 +24,9 @@ jobs:
       - name: Production Build
         run: |
           npm run build
+        env:
+          REACT_APP_GOOGLEMAPSAPIKEY: ${{ secrets.REACT_APP_GOOGLEMAPSAPIKEY }}
+          REACT_APP_APIENDPOINT: ${{ secrets.REACT_APP_APIENDPOINT }}
         working-directory: ./frontend
       # - name: Unit Tests
       #   run: |
