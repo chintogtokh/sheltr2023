@@ -1,0 +1,46 @@
+// This functions as the main css
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+    color: black;
+    font-family: 'Cabin', sans-serif !important;
+    height:100%;
+    overflow-x:hidden;
+  margin-bottom: 100px; /* Margin bottom by footer height */
+}
+
+main{
+	z-index:40;
+	position: relative;
+}
+
+.container{
+	padding-top:40px;
+}
+
+.custom-toast{
+	font-family: 'Cabin';
+}
+
+.breadcrumb{
+	    background-color: white;
+    border-radius: 0;
+    padding-bottom: 0;
+    padding: 5px 0px;
+}
+
+.star-ratings{
+  position: relative;
+  display: inline-block;
+
+  .empty{
+
+  }
+
+  .actual{
+    position: absolute;
+    left:0;
+  }
+}

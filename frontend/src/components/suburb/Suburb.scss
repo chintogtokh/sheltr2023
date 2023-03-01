@@ -1,0 +1,167 @@
+#SuburbComponent{
+
+    .media img{
+    	width:80px;
+    }
+
+    .container{
+        padding-bottom:80px;
+        z-index:1;
+        position: relative;
+    }
+
+    .react-select-single-suburb{
+        clear:both;
+        display: inline-block;
+        font-size: inherit;
+        width:100%;
+        top: 0;
+        color:black;
+        font-size:15px;
+        margin-bottom: 1em;
+        // z-index:0;
+        .Select-control{
+        	border-color: #d9d9d9 #ccc #b3b3b3 !important;
+        	border-radius: 4px !important;
+        	border: 1px solid #ccc !important;
+        }
+
+        .Select-placeholder{
+          color:black;
+        }
+
+        .Select-menu{
+          z-index:50;
+          max-height: 100px;
+        }
+    }
+
+    .stats-section{
+        .row{
+            margin-bottom:10px;
+
+            h4{
+                font-size:1.2em;
+            }
+
+            img.stat-image{
+                float: left;
+                margin-top:-7px;
+                height:50px;
+                padding:5px;
+                margin-right:10px;
+            }
+
+            .col-md-4{
+
+                @media (max-width: 1068px) {
+                  text-align: right;
+                }
+
+                font-size: 120%;
+
+                img.stat-image{
+                    height:40px;
+                    margin: 0;
+                    margin-right: 5px;
+                    margin-left: -5px;
+                    margin-right:5px;
+                    padding:0;
+
+                     @media (max-width: 1068px) {
+                      float:right;
+                    }
+                }
+            }
+        }
+    }
+
+    .wiki-link{
+        color:black;
+        border-bottom:1px solid black;
+
+        &:hover{
+            text-decoration: none;
+            border-bottom:1px solid blue;
+        }
+    }
+
+    .leaflet-container{
+        margin-top:100px;
+    }
+
+    .realestate-section{
+        a{
+            padding:10px;
+        }
+
+        .btn{
+
+            @media (max-width: 1068px) {
+              width:100%;
+            }
+
+            height:60px;
+            margin-right:10px;
+            margin-bottom:10px;
+        }
+    }
+
+    .tiny-icon{
+        width:50px;
+    }
+
+    ul.rating-list{
+        list-style-type: none;
+        margin-left:0;
+        padding-left:0;
+
+        li{
+            margin-bottom:10px;
+        }
+    }
+
+    .badge{
+        font-size:1em;
+    }
+
+
+    .streetview-container{
+        width:100%;
+        height:100%;
+        position: absolute;
+        z-index:-1;
+        left:0;
+    }
+
+    .streetview-container-after{
+        width:100%;
+        height:100%;
+        background:rgba(255,255,255,0.8);
+        position: absolute;
+        z-index:0;
+        left:0;
+    }
+
+    .breadcrumb {
+        background: none!important;
+
+        .breadcrumb-item.active{
+          color:black;
+        }
+
+        .breadcrumb-item a{
+          color: #007bff;
+
+          i:hover{
+            cursor: pointer;
+          }
+        }
+
+    }
+
+    .star-label{
+  display: inline-block;
+  width:300px;
+}
+}

@@ -1,0 +1,27 @@
+nav.navbar{
+  background-color: #112660;
+  box-shadow: none;
+
+  .navbar-nav{
+    .nav-item{
+      .nav-link {
+        color:white;
+      }
+    }
+  }
+
+  .navbar-brand img{
+    height:30px;
+  }
+
+}
+
+@media (min-width: 1068px){
+  nav.navbar{
+    // background-color: rgba(255,255,255,0.3);
+    // box-shadow: 0px 0px 20px 20px rgba(255,255,255,0.3);
+    background-color: #112660;
+    font-weight: bold;
+    height: 50px;
+  }
+}

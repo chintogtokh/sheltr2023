@@ -1,0 +1,244 @@
+#AllSuburbsComponent{
+
+.suburb-card{
+	width:200px;
+	height:150px;
+}
+
+main{
+  min-height:750px;
+}
+
+.container{
+        padding-bottom:80px;
+        z-index:1;
+        position: relative;
+    }
+
+    .react-select-single-suburb{
+        clear:both;
+        display: inline-block;
+        font-size: inherit;
+        width:100%;
+        top: 0;
+        color:black;
+        font-size:15px;
+        margin-bottom: 1em;
+        // z-index:0;
+        .Select-control{
+          border-color: #d9d9d9 #ccc #b3b3b3 !important;
+          border-radius: 4px !important;
+          border: 1px solid #ccc !important;
+        }
+
+        .Select-placeholder{
+          color:black;
+        }
+
+        .Select-menu{
+          z-index:50;
+          max-height: 100px;
+        }
+    }
+
+.img-container{
+	height:200px;
+	display: block;
+    position: relative;
+    overflow: hidden;
+    background-color:gray;
+}
+
+.img-container-empty{
+	text-align: center;
+	line-height: 4em;
+	height:200px;
+	display: block;
+    position: relative;
+    overflow: hidden;
+    background-color:gray;
+}
+
+.img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: all .2s ease-in-out;
+
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.sortable-section{
+  display: inline-block;
+}
+
+.sortable-section-container{
+    width:100%;
+    text-align:right;
+    padding:10px 0;
+}
+
+.react-select{
+    display: inline-block;
+    font-size: inherit;
+    clear:both;
+    top: 0;
+    color:black;
+    text-align: center;
+    cursor: pointer;
+
+    input{
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+      -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+      box-sizing: border-box;         /* Opera/IE 8+ */
+      color:black!important;
+      padding: 0px;
+    }
+
+    .Select-input{
+      background:none;
+    }
+
+    .Select-control{
+    }
+
+    &.is-focused{
+      .Select-control{
+
+      .Select-placeholder{
+        color:black;
+        cursor: pointer!important;
+      }
+    }
+    }
+
+    &.is-open{
+      .Select-control{
+      }
+
+      .Select-value-label{
+        color:transparent!important;
+      }
+    }
+
+    // z-index:0;
+    .Select-control{
+      box-shadow: none!important;
+      color:black;
+
+      .Select-value-label{
+        color:black!important;
+      }
+    }
+
+    .Select-placeholder{
+      color:black;
+      cursor: pointer!important;
+    }
+
+    .Select-menu{
+      //max-height:150px!important;
+    }
+
+}
+
+.filter-text-container{
+    margin:0 10px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    width:70px;
+
+    .filter-text{
+      position: absolute;
+      bottom: 0;
+      height: 36px;
+      padding: 8px 5px;
+      left: 0;
+    }
+  }
+
+.card-text{
+  padding-top:20px;
+}
+
+.streetview-container{
+        width:100%;
+        height:100%;
+        position: absolute;
+        z-index:-5;
+        left:0;
+    }
+
+    .streetview-container-after{
+        width:100%;
+        height:100%;
+        background:rgba(255,255,255,0.8);
+        position: absolute;
+        z-index:0;
+        left:0;
+    }
+
+    .breadcrumb {
+        background: none!important;
+
+        .breadcrumb-item.active{
+          color:black;
+        }
+
+        .breadcrumb-item a{
+          color: #007bff;
+
+          i:hover{
+            cursor: pointer;
+          }
+        }
+    }
+
+    .star-label{
+      display: inline-block;
+      width:100px;
+        text-align: right;
+    margin-right: 10px;
+    }
+
+    .card{
+      background: rgba(255,255,255,0.7);
+    }
+
+    .suburb-link{
+      text-decoration: none;
+      color:black;
+
+      div.card{
+        border:none;
+      }
+
+      &:hover{
+        div.card{
+        -moz-box-shadow:    0 0 10px #112660;
+         -webkit-box-shadow: 0 0 10px #112660;
+         box-shadow:         0 0 10px #112660;
+
+         h3{
+          text-decoration: underline;
+         }
+        }
+      }
+    }
+
+  .page-link{
+    color: #112660;
+  }
+
+  .page-item.active .page-link {
+    background-color: #112660;
+    border-color: #112660;
+    color:white;
+  }
+
+}
+

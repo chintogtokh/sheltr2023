@@ -1,0 +1,10 @@
+node_modules/
+/.vagrant
+.sass-cache
+*.log
+._.DS_Store
+backend/dist/*
+*.log
+temp/*
+Chinto/*
+*.css

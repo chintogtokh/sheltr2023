@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  db:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_DATABASE: sheltr
+      MONGO_INITDB_DATABASE: sheltr
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-auth.js:/docker-entrypoint-initdb.d/mongo-auth.js:ro
+      - ./mongo-loaddata.sh:/docker-entrypoint-initdb.d/mongo-loaddata.sh:ro
+      - ./suburbs.json:/docker-entrypoint-initdb.d/suburbs.json:ro
+      - ./uni_for_mongo.txt:/docker-entrypoint-initdb.d/uni_for_mongo.txt:ro
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - REACT_APP_API_URL=mongodb://root:example@db:27017/mydb
+  backend:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
