@@ -15,20 +15,6 @@ The "system" consists of several parts:
 * Infrastructure, to set up the above into AWS and Cloudflare.
 * Github: Secrets stored here
 
-# Running locally
+# More info
 
-Build to Docker
-
-Run on Docker
-
-docker-compose up --build backend
-
-docker-compose up -d
-
-## Structure
-Self explanatory, 
-
-## Development
-
-
-
+Please see the OLDREADME.md
