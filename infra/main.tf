@@ -44,7 +44,18 @@ resource "aws_s3_bucket_acl" "sheltr_bucket_acl" {
 
 resource "aws_s3_bucket_policy" "sheltr_bucket_bucket_policy" {
   bucket = aws_s3_bucket.sheltr_bucket.id
-  policy = templatefile("${path.module}/s3_policy.json.tmpl", {
-    frontend_domain = "${var.frontend_domain}.${var.root_domain}"
-  })
+  policy = <<DEFINITION
+  {
+      "Version": "2012-10-17",
+      "Statement":[
+          {
+              "Sid":"AddPerm",
+              "Effect":"Allow",
+              "Principal":"*",
+              "Action":["s3:GetObject"],
+              "Resource":["arn:aws:s3:::${var.frontend_domain}.${var.root_domain}/*"]
+          }
+      ]
+  }
+  DEFINITION
 }

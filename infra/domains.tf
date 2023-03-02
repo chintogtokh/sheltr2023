@@ -17,3 +17,16 @@ resource "cloudflare_record" "backend_domain" {
   proxied = true
   zone_id = var.zone_id
 }
+
+data "aws_lb" "mongo_elb" {
+  name = aws_lb.mongo_elb.name
+  # arn  = aws_elb.mongo_elb.arn
+}
+
+resource "cloudflare_record" "mongo_domain" {
+  name    = var.mongo_domain
+  value   = data.aws_lb.mongo_elb.dns_name
+  type    = "CNAME"
+  proxied = false
+  zone_id = var.zone_id
+}

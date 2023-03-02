@@ -10,6 +10,10 @@ variable "root_domain" {
   default = "chintogtokh.com"
 }
 
+variable "mongo_domain" {
+  default = "pztest-db.chintogtokh.com"
+}
+
 variable "zone_id" {
   default = "e3523588855dc31f3d53fc4c9c6c3603"
 }
