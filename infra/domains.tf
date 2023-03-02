@@ -20,7 +20,6 @@ resource "cloudflare_record" "backend_domain" {
 
 data "aws_lb" "mongo_elb" {
   name = aws_lb.mongo_elb.name
-  # arn  = aws_elb.mongo_elb.arn
 }
 
 resource "cloudflare_record" "mongo_domain" {

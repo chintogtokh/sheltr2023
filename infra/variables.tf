@@ -1,3 +1,5 @@
+# Non secret variables 
+
 variable "backend_domain" {
   default = "pztest-backend"
 }

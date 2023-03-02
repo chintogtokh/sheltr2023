@@ -1,3 +1,5 @@
+# Sheltr API backend
+
 resource "aws_ecs_task_definition" "sheltr_backend_task" {
   family                   = "sheltr-backend-task"
   container_definitions    = <<DEFINITION

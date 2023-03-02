@@ -1,3 +1,4 @@
+# Common config for backend services
 
 resource "aws_ecr_repository" "sheltr_repo" {
   name = "sheltr_repo"

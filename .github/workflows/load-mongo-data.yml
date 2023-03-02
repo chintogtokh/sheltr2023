@@ -19,20 +19,30 @@ jobs:
           echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
           sudo apt update
           sudo apt install -y mongodb-org
+      - name: Download universities
+        uses: keithweaver/aws-s3-github-action@v1.0.0
+        with:
+          command: cp
+          source: s3://www.chintogtokh.com/uni_for_mongo.txt
+          destination: ./uni_for_mongo.txt
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
       - name: Import universities
         run: |
           mongoimport --authenticationDatabase=admin --host pztest-db.chintogtokh.com:27017 --username $MONGO_DBUSER --password $MONGO_DBPASS --drop --legacy --db admin --collection universities --type json --file uni_for_mongo.txt
         env:
           MONGO_DBUSER: ${{ secrets.MONGO_DBUSER }}
           MONGO_DBPASS: ${{ secrets.MONGO_DBPASS }}
-      - uses: keithweaver/aws-s3-github-action@v1.0.0
+      - name: Download suburbs
+        uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
           command: cp
           source: s3://www.chintogtokh.com/suburb.json
           destination: ./suburb.json
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ap-southeast-2
+          aws_region: ${{ secrets.AWS_REGION }}
       - name: Import universities
         run: |
           mongoimport --authenticationDatabase=admin --host pztest-db.chintogtokh.com:27017 --username $MONGO_DBUSER --password $MONGO_DBPASS --drop --legacy --db admin --collection suburbs --type json --file suburb.json

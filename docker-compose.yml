@@ -11,11 +11,11 @@ services:
       MONGO_INITDB_DATABASE: sheltr
     ports:
       - "27017:27017"
-    volumes:
-      - ./mongo-auth.js:/docker-entrypoint-initdb.d/mongo-auth.js:ro
-      - ./mongo-loaddata.sh:/docker-entrypoint-initdb.d/mongo-loaddata.sh:ro
-      - ./suburb.json:/docker-entrypoint-initdb.d/suburb.json:ro
-      - ./uni_for_mongo.txt:/docker-entrypoint-initdb.d/uni_for_mongo.txt:ro
+    # volumes:
+    # - ./db/mongo-auth.js:/docker-entrypoint-initdb.d/mongo-auth.js:ro
+    # - ./db/mongo-loaddata.sh:/docker-entrypoint-initdb.d/mongo-loaddata.sh:ro
+    # - ./db/suburb.json:/docker-entrypoint-initdb.d/suburb.json:ro
+    # - ./db/uni_for_mongo.txt:/docker-entrypoint-initdb.d/uni_for_mongo.txt:ro
   frontend:
     build: ./frontend
     ports:

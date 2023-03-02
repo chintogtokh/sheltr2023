@@ -1,3 +1,5 @@
+# Secret variables
+
 variable "aws_access_key" {
   description = "aws_access_key"
   type        = string
