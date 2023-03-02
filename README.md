@@ -40,3 +40,5 @@ Search endpoints:
 * `/api/search/universities?q=QUERY`
 * `/api/search/languages?q=QUERY`
 * `/api/search/suburbs?q=QUERY`
+
+mongoimport --drop --host pztest-db.chintogtokh.com --port 27017 --username sheltr --password sheltr --db admin --collection universities < uni_for_mongo.txt
