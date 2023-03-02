@@ -4,11 +4,11 @@ dotenv.config();
 import express from "express";
 import routes from "./routes";
 import config from "./config/config.dev";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { clientErrorHandler, errorHandler } from "./middleware";
+import { errorHandler } from "./middleware";
 import * as Sentry from "@sentry/node";
+import setupMongoose from "./config/mongoose";
 
 Sentry.init({
   dsn: "https://0c029a548a484c63954f713a930a1fa6@o4504767695814656.ingest.sentry.io/4504767696994304",
@@ -18,20 +18,7 @@ Sentry.init({
 const app = express();
 const port = 4000;
 
-const dbHost = process.env.MONGO_DBHOST;
-const dbPort = process.env.MONGO_DBPORT;
-// const dbName = process.env.MONGO_DBNAME;
-const dbUser = process.env.MONGO_DBUSER;
-const dbPass = encodeURIComponent(process.env.MONGO_DBPASS);
-
-// mongoose.Promise = global.Promise;
-
-mongoose.Promise = global.Promise;
-mongoose.set("debug", true);
-
-var uri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}`;
-console.log(uri);
-mongoose.connect(uri);
+setupMongoose();
 
 app.use(
   cors({
@@ -46,7 +33,6 @@ app.use(bodyParser.json());
 app.use(routes);
 
 //error handling middleware
-// app.use(clientErrorHandler)
 app.use(errorHandler);
 
 app.listen(port);

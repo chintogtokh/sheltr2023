@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/node";
-import * as Tracing from "@sentry/tracing";
 
 export function errorHandler(err, req, res, next) {
   Sentry.captureException(err);

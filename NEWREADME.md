@@ -1,6 +1,9 @@
-# Building and Deploying
+# Sheltr
+This is a MERN based app we made for a project at university.
 
-POC: pztest.chintogtokh.com
+The site is accessible from: https://pztest.chintogtokh.com , which was deployed using the config added here.
+
+# Building and Deploying
 
 The "system" consists of several parts:
 * A React (legacy) frontend, which is bundled and pushed to s3 using a Github action (#1)
