@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import routes from "./routes";
 import config from "./config/config.dev";
@@ -9,18 +12,19 @@ import { clientErrorHandler, errorHandler } from "./middleware";
 const app = express();
 const port = 4000;
 
-let dbHost = config.dbHost;
-let dbPort = config.dbPort;
-let dbName = config.dbName;
-let dbUser = config.dbUser;
-let dbPass = encodeURIComponent(config.dbPass);
+const dbHost = process.env.MONGO_DBHOST;
+const dbPort = process.env.MONGO_DBPORT;
+const dbName = process.env.MONGO_DBNAME;
+const dbUser = process.env.MONGO_DBUSER;
+const dbPass = encodeURIComponent(process.env.MONGO_DBPASS);
 
 // mongoose.Promise = global.Promise;
 
 mongoose.Promise = global.Promise;
 mongoose.set("debug", true);
 
-var uri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`;
+var uri = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}`;
+console.log(uri);
 mongoose.connect(uri);
 
 app.use(
