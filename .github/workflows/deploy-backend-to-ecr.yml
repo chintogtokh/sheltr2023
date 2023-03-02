@@ -26,7 +26,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: sheltr_repo
           IMAGE_TAG: latest
-          MONGO_DBHOST: "pz-db.chintogtokh.com"
+          MONGO_DBHOST: "pztest-db.chintogtokh.com"
           MONGO_DBPORT: "27017"
           MONGO_DBNAME: "sheltr"
           MONGO_DBUSER: ${{ secrets.MONGO_DBUSER }}
