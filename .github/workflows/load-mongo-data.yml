@@ -21,7 +21,7 @@ jobs:
           sudo apt install -y mongodb-org
       - name: Import universities
         run: |
-          mongoimport --host pztest-db.chintogtokh.com:27017 --username $MONGO_DBUSER --password $MONGO_DBPASS --drop --legacy --db sheltr --collection universities --type json --file uni_for_mongo.txt
+          mongoimport --authenticationDatabase=admin --host pztest-db.chintogtokh.com:27017 --username $MONGO_DBUSER --password $MONGO_DBPASS --drop --legacy --db sheltr --collection universities --type json --file uni_for_mongo.txt
         env:
           MONGO_DBUSER: ${{ secrets.MONGO_DBUSER }}
           MONGO_DBPASS: ${{ secrets.MONGO_DBPASS }}
