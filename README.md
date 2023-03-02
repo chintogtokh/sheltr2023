@@ -1,44 +1,34 @@
-# Sheltr app
+# Sheltr
+This is a MERN based app we made for a project at university.
 
-Sheltr - connecting safe homes with new students. The app uses the MERN stack.
+The site is accessible from: https://pztest.chintogtokh.com , which was deployed using the config added here.
+
+# Building and Deploying
+
+The "system" consists of several parts:
+* A React (legacy) frontend, which is bundled and pushed to s3 using a Github action (#1)
+  * Very legacy, hasn't been touched in 5 years
+* An ExpressJS app, which is containerised and pushed to ECS behind a load balancer using a Github action (#2)
+  * In JS, but have modified parts of it to be more sane
+* A MongoDB server, also containerised and pushed to ECR.
+* A Github action (#3) to load data into the MongoDB database. The data itself is initially hosted on S3.
+* Infrastructure, to set up the above into AWS and Cloudflare.
+* Github: Secrets stored here
+
+# Running locally
+
+Build to Docker
+
+Run on Docker
+
+docker-compose up --build backend
+
+docker-compose up -d
+
+## Structure
+Self explanatory, 
 
 ## Development
 
-The `nf` package is required. Install using `npm install --global nf`
-
-`npm install` must be run from both the frontend and backend directories.
-
-`nf start` is run from the root.
-
-## Production
-
-Use the `deploy.sh` script as reference. The frontend and backend are built using `npm run build` from both the frontend and backend.
-
-After this, use the server-config scripts to configure Nginx (as reverse proxy for frontend), Node-6000 (as a Systemd daemon for backend), and MongoDB.
 
 
-## API reference
-The API is accessible from the React app.
-
-
-Getting suburb info:
-* `GET` `/api/suburbs/:shim`
-
-Getting university info:
-* `GET` `/api/university/:shim`
-
-The shim refers to the suburb name, in shim format. Glen Huntly becomes `glen-huntly`, for example.
-
-Getting ranked suburbs:
-* `POST` `/api/ranked_suburbs`. Parameters:
-    * `language` (shim format).
-    * `uni` (shim format) - Required.
-    * `filter` (one of `distance`,`uni`,`safety`,`affordability`) - Defaults to `distance` if not entered.
-    * `distance` (a string or numeric value of distance in kilometers) - Required.
-
-Search endpoints:
-* `/api/search/universities?q=QUERY`
-* `/api/search/languages?q=QUERY`
-* `/api/search/suburbs?q=QUERY`
-
-mongoimport --drop --host pztest-db.chintogtokh.com --port 27017 --username sheltr --password sheltr --db admin --collection universities < uni_for_mongo.txt
