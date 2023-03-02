@@ -12,6 +12,28 @@ resource "aws_ecs_task_definition" "sheltr_backend_task" {
           "hostPort": 4000
         }
       ],
+      "environment": [
+        {
+          "name": "MONGO_DBHOST",
+          "value": "${var.mongo_domain}"
+        },
+        {
+          "name": "MONGO_DBPORT",
+          "value": "27017"
+        },
+        {
+          "name": "MONGO_DBNAME",
+          "value": "sheltr"
+        },
+        {
+          "name": "MONGO_DBUSER",
+          "value": "${var.mongo_initdb_root_username}"
+        },
+        {
+          "name": "MONGO_DBPASS",
+          "value": "${var.mongo_initdb_root_password}"
+        }
+      ],
       "memory": 512,
       "cpu": 256
     }

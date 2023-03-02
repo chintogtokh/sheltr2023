@@ -27,6 +27,8 @@
     "eslint": "^3.1.1"
   },
   "dependencies": {
+    "@sentry/node": "^7.40.0",
+    "@sentry/tracing": "^7.40.0",
     "cors": "^2.8.4",
     "dotenv": "^16.0.3",
     "express": "^4.16.3",

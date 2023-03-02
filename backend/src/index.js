@@ -8,13 +8,19 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { clientErrorHandler, errorHandler } from "./middleware";
+import * as Sentry from "@sentry/node";
+
+Sentry.init({
+  dsn: "https://0c029a548a484c63954f713a930a1fa6@o4504767695814656.ingest.sentry.io/4504767696994304",
+  tracesSampleRate: 1.0,
+});
 
 const app = express();
 const port = 4000;
 
 const dbHost = process.env.MONGO_DBHOST;
 const dbPort = process.env.MONGO_DBPORT;
-const dbName = process.env.MONGO_DBNAME;
+// const dbName = process.env.MONGO_DBNAME;
 const dbUser = process.env.MONGO_DBUSER;
 const dbPass = encodeURIComponent(process.env.MONGO_DBPASS);
 
